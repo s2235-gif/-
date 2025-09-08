@@ -17,11 +17,19 @@ switcher.addEventListener('click', function() {
 });
 
 const routes={
-    '/' : 'home',
-    '/s' : 's',
-    '/m' : 'm',
-    '/e' : 'e',
-    '/c' : 'c'
+    '/': 'home',
+    '/s':'s',
+    '/m':'m',
+    '/e':'e',
+    '/c':'c',
+    '/s/test':'stest',
+    '/s/free':'sfree',
+    '/m/test':'mtest',
+    '/m/free':'mfree',
+    '/e/free':'efree',
+    '/e/test':'etest',
+    '/c/test':'ctest',
+    '/c/free':'cfree'
 };
 
 function getPosts(page){
