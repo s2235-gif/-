@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-    <h1>佐世保高専 掲示板</h1> 
+    <h1>佐世保高専 掲示板</h1>
 
     <nav>
         <a href="#/"data-link>ホーム</a><br>
@@ -18,55 +18,180 @@
         <a href="#/c"data-link>物質工学科</a><br>
     </nav>
 
+    <!--ホーム-->
     <div id="app">
         <div id="home" class="page active">
             <h2>ホーム</h2>
             <p>佐世保高専の掲示板です！</p>
             <p>学科を選んで情報を共有しましょう！</p>
         </div>
+
+    <!--電子制御工学科-->
         <div id="s" class="page">
             <h2>電子制御工学科ページ</h2>
-            <p>テスト情報</p>
+            <nav>
+                <a href="#/s/test"data-link>テスト情報</a><br>
+                <a href="#/s/free"data-link>自由報告欄</a><br>
+            </nav>
+        </div>
+
+        <!--テスト情報-->
+        <div id="stest" class="page">
+            <h2>テスト情報</h2>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/s"data-link>戻る</a><br>
+            </nav>
+
             <p>
                 <!--以下に日付・テスト科目を入力-->
                 8月4日　コミュ、電回Ⅱ
             </p>
-            <textarea id="s-input" placeholder="ここに書き込んでください"></textarea>
-            <button onclick="addPost('s')">投稿</button>
-            <div id="s-posts" class="posts"></div>
+            <textarea id="stest-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('stest')">投稿</button>
+            <div id="stest-posts" class="posts"></div>
         </div>
+
+        <!--自由報告欄-->
+        <div id="sfree" class="page">
+            <h2>自由報告欄</h2>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/s"data-link>戻る</a><br>
+            </nav>
+
+            <p>いろんな情報を共有しあいましょう！</p>
+            <textarea id="sfree-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('sfree')">投稿</button>
+            <div id="sfree-posts" class="posts"></div>
+        </div>
+    
+    <!--機械工学科-->
         <div id="m" class="page">
             <h2>機械工学科ページ</h2>
-            <p>テスト情報</p>
+            <nav>
+                <a href="#/m/test"data-link>テスト情報</a><br>
+                <a href="#/m/free"data-link>自由報告欄</a><br>
+            </nav>
+        </div>
+
+        <!--テスト情報-->
+        <div id="mtest" class="page">
+            <h2>テスト情報</h2>
+
+             <!--戻る-->
+             <nav>
+                <a href="#/m"data-link>戻る</a><br>
+            </nav>
+
             <p>
                 <!--以下に日付・テスト科目を入力-->
                 8月4日　コミュ、メカトロ
             </p>
-            <textarea id="m-input" placeholder="ここに書き込んでください"></textarea>
-            <button onclick="addPost('m')">投稿</button>
-            <div id="m-posts" class="posts"></div>
+            <textarea id="mtest-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('mtest')">投稿</button>
+            <div id="mtest-posts" class="posts"></div>
         </div>
+
+        <!--自由報告欄-->
+        <div id="mfree" class="page">
+            <h2>自由報告欄</h2>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/m"data-link>戻る</a><br>
+            </nav>
+
+            <p>いろんな情報を共有しあいましょう！</p>
+            <textarea id="mfree-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('mfree')">投稿</button>
+            <div id="mfree-posts" class="posts"></div>
+        </div>
+
+    <!--電気電子工学科-->
         <div id="e" class="page">
             <h2>電気電子工学科ページ</h2>
-            <p>テスト情報</p>
+            <nav>
+                <a href="#/e/test"data-link>テスト情報</a><br>
+                <a href="#/e/free"data-link>自由報告欄</a><br>
+            </nav>
+        </div>
+
+        <!--テスト情報-->
+        <div id="etest" class="page">
+            <h2>テスト情報</h2>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/e"data-link>戻る</a><br>
+            </nav>
+
             <p>
                 <!--以下に日付・テスト科目を入力-->
                 8月4日　コミュ、IoT
             </p>
-            <textarea id="e-input" placeholder="ここに書き込んでください"></textarea>
-            <button onclick="addPost('e')">投稿</button>
-            <div id="e-posts" class="posts"></div>
+            <textarea id="etest-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('etest')">投稿</button>
+            <div id="etest-posts" class="posts"></div>
         </div>
+
+        <!--自由報告欄-->
+        <div id="efree" class="page">
+            <h2>自由報告欄</h2>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/e"data-link>戻る</a><br>
+            </nav>
+
+            <p>いろんな情報を共有しあいましょう！</p>
+            <textarea id="efree-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('efree')">投稿</button>
+            <div id="efree-posts" class="posts"></div>
+        </div>
+
+    <!--物質工学科-->
         <div id="c" class="page">
             <h2>物質工学科ページ</h2>
+            <nav>
+                <a href="#/c/test"data-link>テスト情報</a><br>
+                <a href="#/c/free"data-link>自由報告欄</a><br>
+            </nav>
+        </div>
+
+        <!--テスト情報-->
+        <div id="ctest" class="page">
             <p>テスト情報</p>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/c"data-link>戻る</a><br>
+            </nav>
+
             <p>
                 <!--以下に日付・テスト科目を入力-->
                 8月4日　コミュ、物化Ⅱ
             </p>
-            <textarea id="c-input" placeholder="ここに書き込んでください"></textarea>
-            <button onclick="addPost('c')">投稿</button>
-            <div id="c-posts" class="posts"></div>
+            <textarea id="ctest-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('ctest')">投稿</button>
+            <div id="ctest-posts" class="posts"></div>
+        </div>
+
+        <!--自由報告欄-->
+        <div id="cfree" class="page">
+            <h2>自由報告欄</h2>
+
+            <!--戻る-->
+            <nav>
+                <a href="#/c"data-link>戻る</a><br>
+            </nav>
+
+            <p>いろんな情報を共有しあいましょう！</p>
+            <textarea id="cfree-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('cfree')">投稿</button>
+            <div id="cfree-posts" class="posts"></div>
         </div>
     </div>
 
@@ -87,5 +212,3 @@
     <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
 </html>
-
-
