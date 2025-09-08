@@ -17,11 +17,11 @@ switcher.addEventListener('click', function() {
 });
 
 const routes={
-    '/': 'home',
-    '/s':'s',
-    '/m':'m',
-    '/e':'e',
-    '/c':'c'
+    '/' : 'home',
+    '/s' : 's',
+    '/m' : 'm',
+    '/e' : 'e',
+    '/c' : 'c'
 };
 
 function getPosts(page){
