@@ -16,6 +16,14 @@ switcher.addEventListener('click', function() {
     console.log('current class name: '+className);
 });
 
+const routes={
+    '/': 'home',
+    '/s':'s',
+    '/m':'m',
+    '/e':'e',
+    '/c':'c'
+};
+
 function getPosts(page){
     return JSON.parse(localStorage.getItem(`posts-${page}`) ||'[]');
 }
