@@ -200,6 +200,13 @@
         window.addEventListener('load', router);
 
         window.addEventListener('hashchange', router);
+
+        function router() {
+            const hash = location.hash.replace("#/", "") || "home";
+            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+            const page = document.getElementById(hash) || document.getElementById("home");
+            page.classList.add("active");
+        }
         
     </script>
 
@@ -257,6 +264,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
     </script>
+
 
     <ul>
         <script>alert('佐世保高専の掲示板です！')</script>
