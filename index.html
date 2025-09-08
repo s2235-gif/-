@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatiable" content="IE=edge">
@@ -27,42 +27,61 @@
         <div id="s" class="page">
             <h2>電子制御工学科ページ</h2>
             <p>テスト情報</p>
-            <textarea id="m-input" placeholder="ここに書き込んでください"></textarea>
+            <p>
+                <!--以下に日付・テスト科目を入力-->
+                8月4日　コミュ、電回Ⅱ
+            </p>
+            <textarea id="s-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('s')">投稿</button>
+            <div id="s-posts" class="posts"></div>
         </div>
         <div id="m" class="page">
             <h2>機械工学科ページ</h2>
+            <p>テスト情報</p>
+            <p>
+                <!--以下に日付・テスト科目を入力-->
+                8月4日　コミュ、メカトロ
+            </p>
+            <textarea id="m-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('m')">投稿</button>
+            <div id="m-posts" class="posts"></div>
         </div>
         <div id="e" class="page">
             <h2>電気電子工学科ページ</h2>
+            <p>テスト情報</p>
+            <p>
+                <!--以下に日付・テスト科目を入力-->
+                8月4日　コミュ、IoT
+            </p>
+            <textarea id="e-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('e')">投稿</button>
+            <div id="e-posts" class="posts"></div>
         </div>
         <div id="c" class="page">
             <h2>物質工学科ページ</h2>
+            <p>テスト情報</p>
+            <p>
+                <!--以下に日付・テスト科目を入力-->
+                8月4日　コミュ、物化Ⅱ
+            </p>
+            <textarea id="c-input" placeholder="ここに書き込んでください"></textarea>
+            <button onclick="addPost('c')">投稿</button>
+            <div id="c-posts" class="posts"></div>
         </div>
     </div>
 
     <script>
-        const routes={
-            '/': 'home',
-            '/s':'s',
-            '/m':'m',
-            '/e':'e',
-            '/c':'c'
-        };
-
-        function router(){
-            const path=location.hash.slice(1) || '/';
-            document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
-            const pageId = routes[path];
-            if(pageId) document.getElementById(pageId).classList.add('active');
-        }
 
         window.addEventListener('load', router);
 
         window.addEventListener('hashchange', router);
+        
     </script>
-   
+    <ul>
+        <script>alert('佐世保高専の掲示板です！')</script>
+    </ul>
     <div>
-        <button class="btn">Dark</button>
+        <button class="btn">Light</button>
     </div>
     <script src="app.js"></script>
     <noscript>You need to enable JavaScript to view the full site.</noscript>
