@@ -56,6 +56,37 @@ function getPosts(page){
 return JSON.parse(localStorage.getItem(`posts-${page}`) ||'[]');
 
 }
+
+async function addPost(page) {
+    const input = document.getElementById(page + '-input');
+    const text = input.value.trim();
+    if (text === '') return;
+
+    await addDoc(collection(db, page), {
+        text,
+        date: new Date().toLocaleString()
+    });
+
+    input.value = '';
+    renderPosts(page);
+}
+
+async function renderPosts(page) {
+    const q = query(collection(db, page), orderBy("date", "desc"));
+    const snapshot = await getDocs(q);
+
+    const container = document.getElementById(page + '-posts');
+    container.innerHTML = '';
+
+    snapshot.forEach(doc => {
+        const post = doc.data();
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.innerHTML = `<strong>${post.date}</strong><br>${post.text.replace(/\n/g,'<br>')}`;
+        container.appendChild(div);
+    });
+}
+
 function savePosts(page,posts){
 localStorage.setItem(`posts-${page}`,JSON.stringify(posts));
 
