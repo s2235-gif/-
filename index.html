@@ -1,189 +1,55 @@
-<!doctype html>
-<html lang="ja">
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>最小BBS</title>
-<style>
-  :root { --gap:12px }
-  body { max-width: 960px; margin: 24px auto; padding: 0 var(--gap); font-family: system-ui, -apple-system, "Segoe UI", Roboto }
-  h1 { margin: 0 0 var(--gap) 0; }
-  .grid { display: grid; grid-template-columns: 300px 1fr; gap: var(--gap) }
-  .card { border: 1px solid #ddd; border-radius: 8px; padding: var(--gap); background: #fff }
-  .row { display: flex; gap: var(--gap); align-items: center }
-  input, textarea, button, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font: inherit }
-  button { cursor: pointer }
-  ul { list-style: none; padding: 0; margin: 0 }
-  li + li { border-top: 1px solid #eee }
-  .thread-item { padding: 8px; cursor: pointer }
-  .thread-item.active { background: #f3f6ff; border-left: 3px solid #5a73ff }
-  .meta { color: #666; font-size: 12px }
-  .post { padding: 10px }
-  .post .author { font-weight: 600; }
-  .post .time { color: #666; font-size: 12px }
-  .spacer { height: 8px }
-  @media (max-width: 720px){ .grid{ grid-template-columns: 1fr } }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatiable" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nits_ch</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="dark-theme">
+    <h1>佐世保高専 掲示板</h1>
+    <p id="msg">学科</p>
 
-<body>
-  <h1>最小BBS</h1>
-  <div class="grid">
-    <!-- 左 カラム スレ一覧&作成 -->
-    <div class="card">
-      <h3>スレ一覧</h3>
-      <div id="threads"></div>
-      <div class="spacer"></div>
-      <details>
-        <summary>新規スレ作成</summary>
-        <div class="spacer"></div>
-        <div class="row"><input id="new_title" placeholder="タイトル" /></div>
-        <div class="row"><input id="new_author" placeholder="名前 任意" /></div>
-        <div class="row"><textarea id="new_body" rows="4" placeholder="本文"></textarea></div>
-        <div class="row"><button id="btn_create">作成</button></div>
-      </details>
+    <nav>
+        <a href="#/"data-link>ホーム</a><br>
+        <a href="#/m"data-link>機械工学科</a><br>
+        <a href="#/e"data-link>電気電子工学科</a><br>
+        <a href="#/s"data-link>電子制御工学科</a><br>
+        <a href="#/c"data-link>物質工学科</a><br>
+    </nav>
+
+    <div id="app">
+        <div id="home" class="page active"><h2>ホーム</h2><p>佐世保高専の掲示板です！</p></div>
+        <div id="s" class="page"><h2>電子制御工学科ページ</h2></div>
+        <div id="m" class="page"><h2>機械工学科ページ</h2></div>
     </div>
 
-    <!-- 右 カラム スレ本文 -->
-    <div class="card">
-      <div id="currentTitle" class="row" style="justify-content:space-between">
-        <h3 style="margin:0">スレを選んでね</h3>
-        <button id="btn_refresh" style="flex:0 0 auto;width:auto">更新</button>
-      </div>
-      <div id="posts"></div>
-      <div class="spacer"></div>
-      <div id="postBox" style="display:none">
-        <h4>書き込み</h4>
-        <div class="row"><input id="author" placeholder="名前 任意" /></div>
-        <div class="row"><textarea id="body" rows="3" placeholder="本文"></textarea></div>
-        <div class="row"><button id="btn_post">投稿</button></div>
-      </div>
+    <script>
+        const routes={
+            '/': 'home',
+            '/s':'s',
+            '/m':'s'
+        };
+
+        function router(){
+            const path=location.hash.slice(1) || '/';
+            document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+            const pageId = routes[path];
+            if(pageId) document.getElementById(pageId).classList.add('active');
+        }
+
+        window.addEventListener('load', router);
+
+        window.addEventListener('hashchange', router);
+    </script>
+    <ul>
+        <script>alert('佐世保高専の掲示板です！')</script>
+    </ul>
+    <div>
+        <button class="btn">Dark</button>
     </div>
-  </div>
-
-<script>
-const API = {
-  listThreads: async () => (await fetch('/api/threads')).json(),
-  createThread: async ({title, author, body}) => {
-    return fetch('/api/threads', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ title, author, body })
-    }).then(r=>r.json())
-  },
-  listPosts: async (threadId) => (await fetch(`/api/posts?thread=${encodeURIComponent(threadId)}`)).json(),
-  createPost: async ({thread_id, author, body}) => {
-    return fetch('/api/posts', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ thread_id, author, body })
-    }).then(r=>r.json())
-  }
-}
-
-let state = {
-  threads: [],
-  current: null,
-  posts: []
-}
-
-const elThreads = document.getElementById('threads')
-const elPosts = document.getElementById('posts')
-const elCurrentTitle = document.getElementById('currentTitle').querySelector('h3')
-const btnRefresh = document.getElementById('btn_refresh')
-
-async function loadThreads(){
-  state.threads = await API.listThreads()
-  renderThreads()
-  // 何も選んでなければ先頭
-  if(!state.current && state.threads.length){ selectThread(state.threads[0].id) }
-}
-function renderThreads(){
-  if(!state.threads.length){
-    elThreads.innerHTML = '<p class="meta">まだスレがありません</p>'
-    return
-  }
-  const ul = document.createElement('ul')
-  state.threads.forEach(t=>{
-    const li = document.createElement('li')
-    li.className = 'thread-item' + (state.current===t.id ? ' active' : '')
-    li.innerHTML = `<div><div>${escapeHtml(t.title)}</div><div class="meta">${t.created_at}</div></div>`
-    li.onclick = ()=> selectThread(t.id)
-    ul.appendChild(li)
-  })
-  elThreads.innerHTML = ''
-  elThreads.appendChild(ul)
-}
-async function selectThread(id){
-  state.current = id
-  renderThreads()
-  await reloadPosts()
-}
-async function reloadPosts(){
-  if(!state.current) return
-  const data = await API.listPosts(state.current)
-  elCurrentTitle.textContent = data.title || 'スレ'
-  state.posts = data.posts || []
-  document.getElementById('postBox').style.display = 'block'
-  renderPosts()
-}
-function renderPosts(){
-  if(!state.posts.length){
-    elPosts.innerHTML = '<p class="meta">まだ投稿がありません</p>'
-    return
-  }
-  const frag = document.createDocumentFragment()
-  state.posts.forEach(p=>{
-    const div = document.createElement('div')
-    div.className = 'post'
-    div.innerHTML = `
-      <div class="row" style="justify-content:space-between">
-        <div class="author">${escapeHtml(p.author || '名無しさん')}</div>
-        <div class="time">${p.created_at}</div>
-      </div>
-      <div>${escapeHtml(p.body).replace(/\n/g,'<br>')}</div>
-    `
-    frag.appendChild(div)
-  })
-  elPosts.innerHTML = ''
-  elPosts.appendChild(frag)
-}
-
-// 新規スレ作成
-document.getElementById('btn_create').onclick = async ()=>{
-  const title = document.getElementById('new_title').value.trim()
-  const author = document.getElementById('new_author').value.trim()
-  const body = document.getElementById('new_body').value.trim()
-  if(!title || !body) return alert('タイトルと本文は必須')
-  await API.createThread({ title, author, body })
-  document.getElementById('new_title').value=''
-  document.getElementById('new_author').value=''
-  document.getElementById('new_body').value=''
-  await loadThreads()
-  alert('スレ作成OK')
-}
-
-// 投稿
-document.getElementById('btn_post').onclick = async ()=>{
-  const author = document.getElementById('author').value.trim()
-  const body = document.getElementById('body').value.trim()
-  if(!body) return alert('本文を入れてね')
-  await API.createPost({ thread_id: state.current, author, body })
-  document.getElementById('body').value=''
-  await reloadPosts()
-}
-
-// 手動更新
-btnRefresh.onclick = reloadPosts
-
-// 30秒ごと自動更新
-setInterval(()=> state.current && reloadPosts(), 30000)
-
-// XSS最小対策
-function escapeHtml(s){
-  return (s??'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))
-}
-
-// 初回ロード
-loadThreads()
-</script>
+    <script src="app.js"></script>
+    <noscript>You need to enable JavaScript to view the full site.</noscript>
 </body>
 </html>
