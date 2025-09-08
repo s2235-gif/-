@@ -9,7 +9,6 @@
 </head>
 <body class="dark-theme">
     <h1>佐世保高専 掲示板</h1>
-    <p id="msg">学科</p>
 
     <nav>
         <a href="#/"data-link>ホーム</a><br>
@@ -20,16 +19,34 @@
     </nav>
 
     <div id="app">
-        <div id="home" class="page active"><h2>ホーム</h2><p>佐世保高専の掲示板です！</p></div>
-        <div id="s" class="page"><h2>電子制御工学科ページ</h2></div>
-        <div id="m" class="page"><h2>機械工学科ページ</h2></div>
+        <div id="home" class="page active">
+            <h2>ホーム</h2>
+            <p>佐世保高専の掲示板です！</p>
+            <p>学科を選んで情報を共有しましょう！</p>
+        </div>
+        <div id="s" class="page">
+            <h2>電子制御工学科ページ</h2>
+            <p>テスト情報</p>
+            <textarea id="m-input" placeholder="ここに書き込んでください"></textarea>
+        </div>
+        <div id="m" class="page">
+            <h2>機械工学科ページ</h2>
+        </div>
+        <div id="e" class="page">
+            <h2>電気電子工学科ページ</h2>
+        </div>
+        <div id="c" class="page">
+            <h2>物質工学科ページ</h2>
+        </div>
     </div>
 
     <script>
         const routes={
             '/': 'home',
             '/s':'s',
-            '/m':'s'
+            '/m':'m',
+            '/e':'e',
+            '/c':'c'
         };
 
         function router(){
