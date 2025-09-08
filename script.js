@@ -78,6 +78,15 @@ input.value='';
 renderPosts(page);
 
 }
+
+service cloud.firestore {
+    match /databases/{database}/documents {
+        match /{document=**} {
+            allow read, write: if true;
+            }
+               }
+            }
+
 function renderPosts(page){
 const posts = getPosts(page);
 
