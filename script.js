@@ -64,7 +64,7 @@ async function addPost(page) {
 
     await addDoc(collection(db, page), {
         text,
-        date: new Date().toLocaleString()
+        time: Date.now()
     });
 
     posts.unshift({text,date: new Date().toLocaleString()});
