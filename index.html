@@ -211,52 +211,47 @@
     </script>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } 
+            from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
+        // Firebase設定
         const firebaseConfig = {
             apiKey: "AIzaSyC2FOiD7rvmd8hwPEt7YWlULmc9mnE0TC4",
             authDomain: "my-bbs-9ef4c.firebaseapp.com",
             projectId: "my-bbs-9ef4c",
-            storageBucket: "my-bbs-9ef4c.firebasestorage.app",
+            storageBucket: "my-bbs-9ef4c.appspot.com",
             messagingSenderId: "813682728076",
             appId: "1:813682728076:web:f17de67cd4d2cdc4dcafa9"
         };
 
-        // Initialize Firebase
+        // 初期化
         const app = initializeApp(firebaseConfig);
-
-        npm install firebase
-      // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } 
-            from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-        // Firestore 初期化
         const db = getFirestore(app);
-        // 🔹 投稿処理
-        async function addPost(pageId) {
+
+        // 投稿処理
+        window.addPost = async function(pageId) {
             const input = document.getElementById(`${pageId}-input`);
             const text = input.value;
             if (!text) return;
-            
+
             await addDoc(collection(db, pageId), {
                 text: text,
                 time: Date.now()
             });
+
             input.value = "";
-            location.reload(); // ← シンプルにリロードで最新表示
+            location.reload();
         }
-        // 🔹 読み込み処理
+
+        // 投稿読み込み処理
         async function loadPosts(pageId) {
             const list = document.getElementById(`${pageId}-posts`);
             if (!list) return;
-            
+
             const q = query(collection(db, pageId), orderBy("time", "desc"));
             const snapshot = await getDocs(q);
-            
+
             list.innerHTML = "";
             snapshot.forEach(doc => {
                 const div = document.createElement("div");
@@ -264,33 +259,12 @@
                 list.appendChild(div);
             });
         }
-        // ページごとに投稿を読み込む
+
+        // ページごとに読み込み
         ["stest","sfree","mtest","mfree","etest","efree","ctest","cfree"]
             .forEach(loadPosts);
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyC2FOiD7rvmd8hwPEt7YWlULmc9mnE0TC4",
-            authDomain: "my-bbs-9ef4c.firebaseapp.com",
-            projectId: "my-bbs-9ef4c",
-            storageBucket: "my-bbs-9ef4c.firebasestorage.app",
-            messagingSenderId: "813682728076",
-            appId: "1:813682728076:web:f17de67cd4d2cdc4dcafa9"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-
-        window.db = db;
-        window.collection = collection;
-        window.addDoc = addDoc;
-        window.getDocs = getDocs;
-        window.query = query;
-        window.orderBy = orderBy;
+    
     </script>
-
 
     <ul>
         <script>alert('佐世保高専の掲示板です！')</script>
