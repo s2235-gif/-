@@ -20,7 +20,7 @@ body {
   }
 .post { 
   padding: 6px;
-  border-bottom: 1px solid #ddd; 
+  border-bottom: 1px solid #000000; 
   white-space: pre-wrap;
   } 
 .post:last-child { border-bottom: none; } 
