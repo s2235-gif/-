@@ -30,6 +30,10 @@ li {
     list-style: circle;
   }
   
+.list {
+    list-style: square;
+  }
+  
 .light-theme {
     --bg: var(--white);
     --fontColor: var(--black);
@@ -60,4 +64,3 @@ li {
 .page.active{
   display:block;
 }
-
