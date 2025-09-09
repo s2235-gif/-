@@ -240,7 +240,7 @@
                 time: Date.now()
             });
 
-            input.value = "";
+            input.value = '';
             location.reload();
         }
 
@@ -252,7 +252,7 @@
             const q = query(collection(db, pageId), orderBy("time", "desc"));
             const snapshot = await getDocs(q);
 
-            list.innerHTML = "";
+            list.innerHTML = '';
             snapshot.forEach(doc => {
                 const div = document.createElement("div");
                 div.textContent = doc.data().text;
