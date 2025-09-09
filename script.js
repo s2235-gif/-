@@ -78,6 +78,15 @@ async function renderPosts(page) {
     const list = document.getElementById(page + '-posts');
     if (!list) return;
 
+    const div = document.createElement('div');
+    div.className = 'post';
+    div.innerHTML = `
+    <div class="post-time">[${formatted}]</div>
+    <div class="post-text">${post.text.replace(/\n/g,'<br>')}</div>
+    <hr>
+    `;
+    container.appendChild(div);
+
     const q = query(collection(db, "home"), orderBy("time", "desc"));
     const snapshot = await getDocs(q);
 
