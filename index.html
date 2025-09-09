@@ -234,14 +234,16 @@
             const input = document.getElementById(`${pageId}-input`);
             const text = input.value;
             if (!text) return;
-
+            
             await addDoc(collection(db, pageId), {
                 text: text,
                 time: Date.now()
             });
-
+            
             input.value = "";
-            location.reload();
+
+            // 🔹 リロードしないで投稿を再読み込み
+            loadPosts(pageId);
         }
 
         // 投稿読み込み処理
