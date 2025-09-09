@@ -131,16 +131,21 @@ posts.forEach(post=>{
 });
 
 }
-function router() {
-    const hash = location.hash.replace("#/", "") || "home";
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    const page = document.getElementById(hash) || document.getElementById("home");
-    page.classList.add("active");
+function router(){
+const path=location.hash.slice(1) || '/';
 
-    // 🔹 ページを切り替えたら投稿を読み込む
-    loadPosts(hash);
+document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+
+const pageId = routes[path];
+
+if(pageId) {
+
+    document.getElementById(pageId).classList.add('active');
+
+    renderPosts(pageId);
+
 }
 
-window.addEventListener("load", router);
-window.addEventListener("hashchange", router);
-
+}
+window.addEventListener('load', router);
+window.addEventListener('hashchange', router);
