@@ -64,7 +64,7 @@ async function addPost(page) {
 
     await addDoc(collection(db, page), {
         text,
-        time: new Date().toLocaleString()
+        date: new Date().toLocaleString()
     });
 
     posts.unshift({text,date: new Date().toLocaleString()});
@@ -96,7 +96,7 @@ async function renderPosts(page) {
         });
 
         const div = document.createElement("div");
-        div.innerHTML = `<strong>${post.date}</strong><br>${post.txt}`;
+        div.innerHTML = `<strong>${post.date}</strong><br>${post.text}`;
         div.textContent = `[${formatted}] ${data.text}`;
         list.appendChild(div);
     });
