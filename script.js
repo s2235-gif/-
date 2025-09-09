@@ -81,7 +81,7 @@ async function renderPosts(page) {
     const q = query(collection(db, pageId), orderBy("time", "desc"));
     const snapshot = await getDocs(q);
 
-    list.innerHTML = "";
+    list.innerHTML = '';
     snapshot.forEach(doc => {
         const data = doc.data();
 
