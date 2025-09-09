@@ -75,7 +75,7 @@ async function addPost(page) {
 }
 
 async function renderPosts(page) {
-    const list = document.getElementById(`${pageId}-posts`);
+    const list = document.getElementById(page + '-posts');
     if (!list) return;
 
     const q = query(collection(db, pageId), orderBy("time", "desc"));
