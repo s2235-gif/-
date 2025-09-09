@@ -75,13 +75,13 @@ async function addPost(page) {
 }
 
 async function renderPosts(page) {
-    const list = document.getElementById(page + '-posts');
-    if (!list) return;
+    const container = document.getElementById(page + '-posts');
+    if (!container) return;
 
     const q = query(collection(db, "home"), orderBy("time", "desc"));
     const snapshot = await getDocs(q);
 
-    list.innerHTML = '';
+    container.innerHTML = '';
     snapshot.forEach(doc => {
         const data = doc.data();
 
@@ -98,7 +98,7 @@ async function renderPosts(page) {
         const div = document.createElement("div");
         div.innerHTML = `<strong>${post.date}</strong><br>${post.text}`;
         div.textContent = `[${formatted}] ${data.text}`;
-        list.appendChild(div);
+        container.appendChild(div);
     });
 }
 
