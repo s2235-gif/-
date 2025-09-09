@@ -67,6 +67,8 @@ async function addPost(page) {
         date: new Date().toLocaleString()
     });
 
+    posts.unshift({text,date: new Date().toLocaleString()});
+
     input.value = '';
     renderPosts(page);
 }
