@@ -26,6 +26,27 @@ body {
 .post:last-child { border-bottom: none; } 
 textarea { width: 100%; padding: 6px; border-radius: 6px; } 
 
+.post {
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.post-time {
+    font-size: 0.8em;
+    color: gray;
+    margin-bottom: 3px;
+}
+
+.post-text {
+    font-size: 1em;
+}
+
+.post hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-top: 8px;
+}
+
 li {
     list-style: circle;
   }
@@ -64,3 +85,4 @@ li {
 .page.active{
   display:block;
 }
+
