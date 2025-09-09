@@ -72,18 +72,29 @@ async function addPost(page) {
 }
 
 async function renderPosts(page) {
-    const q = query(collection(db, page), orderBy("date", "desc"));
+    const list = document.getElementById(`${pageId}-posts`);
+    if (!list) return;
+
+    const q = query(collection(db, pageId), orderBy("time", "desc"));
     const snapshot = await getDocs(q);
 
-    const container = document.getElementById(page + '-posts');
-    container.innerHTML = '';
-
+    list.innerHTML = "";
     snapshot.forEach(doc => {
-        const post = doc.data();
-        const div = document.createElement('div');
-        div.className = 'post';
-        div.innerHTML = `<strong>${post.date}</strong><br>${post.text.replace(/\n/g,'<br>')}`;
-        container.appendChild(div);
+        const data = doc.data();
+
+        // 🔹 Firestoreに保存したミリ秒をDateに変換
+        const date = new Date(data.time);
+        const formatted = date.toLocaleString("ja-JP", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+        const div = document.createElement("div");
+        div.textContent = `[${formatted}] ${data.text}`;
+        list.appendChild(div);
     });
 }
 
