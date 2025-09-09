@@ -86,7 +86,7 @@ async function renderPosts(page) {
         const data = doc.data();
 
         // 🔹 Firestoreに保存したミリ秒をDateに変換
-        const date = new Date(data.time);
+        const date = new Date(post.time);
         const formatted = date.toLocaleString("ja-JP", {
             year: "numeric",
             month: "2-digit",
