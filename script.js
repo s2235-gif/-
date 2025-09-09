@@ -98,50 +98,7 @@ async function renderPosts(page) {
     });
 }
 
-function savePosts(page,posts){
-localStorage.setItem(`posts-${page}`,JSON.stringify(posts));
 
-}
-function addPost(page){
-const input = document.getElementById(page + '-input');
-
-const text = input.value.trim();
-
-if(text ==='')return;
-
-const posts = getPosts(page);
-
-posts.unshift({text,date: new Date().toLocaleString()});
-
-savePosts(page,posts);
-
-input.value='';
-
-renderPosts(page);
-
-}
-
-
-function renderPosts(page){
-const posts = getPosts(page);
-
-const container = document.getElementById(page + '-posts');
-
-container.innerHTML = '';
-
-posts.forEach(post=>{
-
-    const div = document.createElement('div');
-
-    div.className = 'post';
-
-    div.innerHTML = `<strong>${post.date}</strong><br>${post.text}`;
-
-    container.appendChild(div);
-
-});
-
-}
 function router(){
 const path=location.hash.slice(1) || '/';
 
