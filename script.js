@@ -64,7 +64,7 @@ async function addPost(page) {
 
     await addDoc(collection(db, page), {
         text,
-        time: Date.now()
+        time: new Date().toLocaleString()
     });
 
     posts.unshift({text,date: new Date().toLocaleString()});
@@ -78,7 +78,7 @@ async function renderPosts(page) {
     const list = document.getElementById(page + '-posts');
     if (!list) return;
 
-    const q = query(collection(db, pageId), orderBy("time", "desc"));
+    const q = query(collection(db, "home"), orderBy("time", "desc"));
     const snapshot = await getDocs(q);
 
     list.innerHTML = '';
@@ -86,7 +86,7 @@ async function renderPosts(page) {
         const data = doc.data();
 
         // 🔹 Firestoreに保存したミリ秒をDateに変換
-        const date = new Date(post.time);
+        const date = new Date(data.time);
         const formatted = date.toLocaleString("ja-JP", {
             year: "numeric",
             month: "2-digit",
