@@ -68,7 +68,7 @@ async function addPost(page) {
     });
 
     posts.unshift({text,date: new Date().toLocaleString()});
-    div.innerHTML = `<strong>${post.date}</strong><br>${post.txt}`;
+    
 
     input.value = '';
     renderPosts(page);
@@ -96,6 +96,7 @@ async function renderPosts(page) {
         });
 
         const div = document.createElement("div");
+        div.innerHTML = `<strong>${post.date}</strong><br>${post.txt}`;
         div.textContent = `[${formatted}] ${data.text}`;
         list.appendChild(div);
     });
