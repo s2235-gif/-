@@ -237,7 +237,7 @@
 
             await addDoc(collection(db, pageId), {
                 text: text,
-                date: new Date().toLocaleString()
+                time: Date.now()
             });
 
             input.value = '';
